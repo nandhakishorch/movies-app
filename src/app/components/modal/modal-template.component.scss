@@ -1,0 +1,17 @@
+.modal-template {
+    .modal-body-overflow {
+        overflow: scroll;
+        height: 431px;
+        overflow-x: hidden;
+    }
+
+    .modal-xl {
+        max-width: 1300px !important;
+    }
+
+    .btn-tab-style {
+        border-bottom: none;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+   }
+   }

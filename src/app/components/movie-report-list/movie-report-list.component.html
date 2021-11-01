@@ -1,0 +1,40 @@
+<div class="movie-report-list">
+    <div class="row">
+        <div class="col-3"><span>Title : </span><input type="text" placeholder="Search"
+                class="form-control d-inline ml-2 mb-2" [(ngModel)]="titleSearch" style="width: 70%;"></div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-bordered">
+                <thead>
+                    <th class="w-19">Title</th>
+                    <th class="w-8">US Gross</th>
+                    <th class="w-12">Worldwide Gross</th>
+                    <th class="w-14">Production Budget</th>
+                    <th class="w-9">Release Date</th>
+                    <th class="w-12">Major Genre</th>
+                    <th class="w-10">Distributor</th>
+                    <th class="w-16">IMDB Rating - Votes</th>
+                </thead>
+                <tbody class="tbody-scroll">
+                    <tr *ngFor="let movie of movies | orderBy: 'Title' | filter:titleSearch">
+                        <td class="w-19">
+                            <div class="text-ellipsis" [title]="movie.Title" [innerHTML]="movie.Title"></div>
+                        </td>
+                        <td class="w-8"><span [innerHTML]="movie.US_Gross"></span></td>
+                        <td class="w-12"><span [innerHTML]="movie.Worldwide_Gross"></span></td>
+                        <td class="w-14"><span [innerHTML]="movie.Production_Budget"></span></td>
+                        <td class="w-9"><span [innerHTML]="displayDate(movie.Release_Date)"></span></td>
+                        <td class="w-12"><span [innerHTML]="movie.Major_Genre"></span></td>
+                        <td class="w-10">
+                            <div class="text-ellipsis" [title]="movie.Distributor" [innerHTML]="movie.Distributor">
+                            </div>
+                        </td>
+                        <td class="w-16"><span [innerHTML]="movie.IMDB_Rating"></span>- <span
+                                [innerHTML]="movie.IMDB_Votes"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

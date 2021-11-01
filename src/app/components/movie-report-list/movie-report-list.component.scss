@@ -1,0 +1,20 @@
+.movie-report-list {
+    padding: 15px;
+    border: 1px solid gray;
+    border-top: none;
+    margin-top: -11px;
+    margin-bottom: 10px;
+
+    .tbody-scroll {
+        overflow-y: scroll;
+        max-height: 263px;
+        display: block;
+    }
+
+    table thead,
+table tbody tr {
+    display: table;
+   table-layout: fixed;
+   width: 100%;
+}
+}

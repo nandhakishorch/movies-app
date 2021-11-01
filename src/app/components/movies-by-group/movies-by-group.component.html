@@ -1,0 +1,17 @@
+<div class="moviesByGroup">
+  <div class="row mr-0">
+    <div class="col-12">
+      <ng-container *ngFor="let movie of moviesByGroup; let $index = index">
+        <div class="genre-type" (click)="showMovies(movie, $index)">
+          <span class="p-2 font-weight-bold" *ngIf="!isShowMovies || $index !== selectedIndex">+</span>
+          <span class="p-2 font-weight-bold" *ngIf="isShowMovies && $index === selectedIndex">-</span>
+          <span class="pl-1" [innerHTML]="movie?.Type"></span> - Movies
+          (<span [innerHTML]="movie?.Movies?.length"></span>)
+        </div>
+        <ng-container *ngIf="isShowMovies && $index === selectedIndex">
+          <movie-report-list [movies]="movie?.Movies"></movie-report-list>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+</div>

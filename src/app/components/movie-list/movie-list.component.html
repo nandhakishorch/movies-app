@@ -1,0 +1,130 @@
+<div class="movie-list">
+  <div class="row" style="height: 415px;">
+    <div class="col-12">
+      <table class="table table-bordered">
+        <thead>
+          <th class="w-16">Title</th>
+          <th class="w-8">US Gross</th>
+          <th class="w-10">Worldwide Gross</th>
+          <th class="w-12">Production Budget</th>
+          <th class="w-10">Release Date</th>
+          <th class="w-10">Major Genre</th>
+          <th class="w-10">Distributor</th>
+          <th class="w-15">IMDB Rating - Votes</th>
+          <th class="w-9 text-center">Actions</th>
+        </thead>
+        <tbody>
+          <tr *ngFor=" let movie of movies; let $index=index">
+            <td class="w-16">
+              <div class="text-ellipsis" [title]="movie.Title" [innerHTML]="movie.Title" *ngIf="index !== $index">
+              </div>
+              <input class="form-control" [(ngModel)]="movie.Title" *ngIf="index === $index ">
+            </td>
+            <td class="w-8">
+              <span [innerHTML]="movie.US_Gross" *ngIf="index !== $index"> </span>
+              <input class="form-control" [(ngModel)]="movie.US_Gross" *ngIf="index === $index">
+            </td>
+            <td class="w-10">
+              <span [innerHTML]="movie.Worldwide_Gross" *ngIf="index !== $index"> </span>
+              <input class="form-control" [(ngModel)]="movie.Worldwide_Gross" *ngIf="index === $index">
+            </td>
+            <td class="w-12">
+              <span [innerHTML]="movie.Production_Budget" *ngIf="index !== $index"> </span>
+              <input class="form-control" [(ngModel)]="movie.Production_Budget" *ngIf="index === $index">
+            </td>
+            <td class="w-10">
+              <span [innerHTML]="displayDate(movie.Release_Date)" *ngIf="index !== $index"> </span>
+              <input type="text" #datepickerFull="bsDatepicker" [(ngModel)]="movie.Release_Date"
+                placeholder="Datepicker" class="form-control" [bsConfig]="{ dateInputFormat: 'MMM DD YYYY' }"
+                bsDatepicker *ngIf="index === $index">
+            </td>
+            <td class="w-10">
+              <span [innerHTML]="movie.Major_Genre" *ngIf="index !== $index"> </span>
+              <select [(ngModel)]="selectedGenre" (change)="movie.Major_Genre =selectedGenre" *ngIf="index === $index"
+                class="form-control">
+                <option value="select">Select Genre</option>
+                <option *ngFor="let genre of genres" [ngValue]="genre">{{genre}}</option>
+              </select>
+            </td>
+            <td class="w-10">
+              <div class="text-ellipsis" [title]="movie.Distributor" [innerHTML]="movie.Distributor"
+                *ngIf="index !== $index"> </div>
+              <input class="form-control" [(ngModel)]="movie.Distributor" *ngIf="index === $index">
+            </td>
+            <td class="w-15">
+              <ng-container *ngIf="index !== $index">
+                <span [innerHTML]="movie.IMDB_Rating"> </span> -
+                <span [innerHTML]="movie.IMDB_Votes"> </span>
+              </ng-container>
+              <ng-container *ngIf="index === $index">
+                <input class="form-control w-45 d-inline" [(ngModel)]="movie.IMDB_Rating"> -
+                <input class="form-control w-45 d-inline" [(ngModel)]="movie.IMDB_Votes">
+              </ng-container>
+            </td>
+            <td class="w-9 text-center">
+              <span *ngIf="index !== $index" class="action-btn" (click)="editMovie(movie, $index)">Edit</span>
+              <span *ngIf="index === $index" class="action-btn" (click)="updateMovie(movie, $index)">Update</span>
+              <span *ngIf="index === $index" class="action-btn" (click)="cancelMovie(movie, $index)">Cancel</span>
+              <span *ngIf="index !== $index" class="action-btn" (click)="deleteMovie(movie,$index)">Delete</span>
+            </td>
+          </tr>
+          <ng-container *ngIf="isNewRecord">
+            <tr>
+              <td class="w-16">
+                <input class="form-control" [(ngModel)]="newMovie.Title">
+              </td>
+              <td class="w-8">
+                <input class="form-control" [(ngModel)]="newMovie.US_Gross">
+              </td>
+              <td class="w-10">
+                <input class="form-control" [(ngModel)]="newMovie.Worldwide_Gross">
+              </td>
+              <td class="w-12">
+                <input class="form-control" [(ngModel)]="newMovie.Production_Budget">
+              </td>
+              <td class="w-10">
+                <input type="text" #datepickerFull="bsDatepicker" [(ngModel)]="newMovie.Release_Date"
+                  placeholder="Release Date" class="form-control" [bsConfig]="{ dateInputFormat: 'MMM DD YYYY' }"
+                  bsDatepicker>
+              </td>
+              <td class=" w-10">
+                <select [(ngModel)]="selectedGenre" (change)="newMovie.Major_Genre = selectedGenre"
+                  class="form-control">
+                  <option value="select">Select Genre</option>
+                  <option *ngFor="let genre of genres" [ngValue]="genre">{{genre}}</option>
+                </select>
+              </td>
+              <td class="w-10">
+                <input class="form-control" [(ngModel)]="newMovie.Distributor">
+              </td>
+              <td class="w-15">
+                <input class="form-control w-45 d-inline" [(ngModel)]="newMovie.IMDB_Rating"> -
+                <input class="form-control w-45 d-inline" [(ngModel)]="newMovie.IMDB_Votes">
+              </td>
+              <td class="w-9 text-center">
+                <span class="action-btn" (click)="saveMovie()">Save</span>
+                <span class="action-btn" (click)="cancelNewMovie()">Cancel</span>
+              </td>
+            </tr>
+          </ng-container>
+
+          <!-- <ng-container *ngIf="movies?.length === 0">
+            <tr>
+              <td colspan="8">
+                <span>No Records Found</span>
+              </td>
+            </tr>
+          </ng-container> -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <pagination class="float-right" [boundaryLinks]="true" [(ngModel)]="currentPage" [itemsPerPage]="10"
+        [maxSize]="10" [totalItems]="totalRecords" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+        lastText="&raquo;" (pageChanged)="pageChanged($event)">
+      </pagination>
+    </div>
+  </div>
+</div>

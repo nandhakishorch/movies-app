@@ -1,0 +1,22 @@
+<div class="row mt-4 mb-4">
+  <div class="col-12">
+    <div class="row">
+      <div class="col-3 text-left">
+        <input type="text" class="form-control" [(ngModel)]="searchText" (input)="onSearchChange($event.target.value)"
+          placeholder="Title Search">
+      </div>
+      <div class="offset-5 col-4 text-right">
+        <button class="btn btn-danger" (click)="generateReport()" data-toggle="modal">Generate Report</button>
+        <button class="btn btn-success ml-2" (click)="movieList.addNewMovieRecord()">Add Movie</button>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-container *ngIf="movies">
+  <movie-list [moviesSource]="movies" [searchText]="searchText"> </movie-list>
+  <modal-template></modal-template>
+</ng-container>
+
+<!-- <div class=".data">
+
+</div> -->
